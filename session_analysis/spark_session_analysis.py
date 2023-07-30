@@ -17,7 +17,6 @@ def parse_log_line(line):
     except:
         return None
 
-
 def calculate_sessions(group):
     ip, data = group
     data = list(data)
@@ -25,7 +24,7 @@ def calculate_sessions(group):
     sessions = []
     session = [data[0]]
     for i in range(1, len(data)):
-        if datetime.strptime(data[i][0], '%Y-%m-%d %H:%M:%S') - datetime.strptime(session[-1][0], '%Y-%m-%d %H:%M:%S') > timedelta(seconds=1800):
+        if data[i][0] - session[-1][0] > timedelta(seconds=1800):
             sessions.append((ip, session))
             session = [data[i]]
         else:
@@ -46,4 +45,3 @@ for record in parsed_sample:
 grouped_by_ip = parsed_lines.groupByKey()
 sessions = grouped_by_ip.flatMap(calculate_sessions)
 sessions.saveAsTextFile('hdfs://localhost:9000/session_output')
-
