@@ -38,7 +38,7 @@ def calculate_sessions(group):
 conf = SparkConf().setMaster('local[*]').setAppName('Log Analysis')
 sc = SparkContext(conf=conf)
 
-log_lines = sc.textFile('hdfs://localhost:9000/logs/u_ex230501*')
+log_lines = sc.textFile('hdfs://localhost:9000/logs/u_ex*')
 parsed_lines = log_lines.map(parse_log_line).filter(lambda x: x is not None)
 parsed_sample = parsed_lines.take(10)  # take the first 10 records
 print("size of parsed_sample: "+str(len(parsed_sample)))
