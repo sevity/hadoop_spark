@@ -34,7 +34,8 @@ def calculate_sessions(group):
 
 
 # Spark configuration
-conf = SparkConf().setMaster('local').setAppName('Log Analysis')
+# [*]하면 모든 코어 사용
+conf = SparkConf().setMaster('local[*]').setAppName('Log Analysis')
 sc = SparkContext(conf=conf)
 
 log_lines = sc.textFile('hdfs://localhost:9000/logs/u_ex230501*')
