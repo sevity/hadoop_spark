@@ -25,12 +25,13 @@ def calculate_sessions(group):
     session = [data[0]]
     for i in range(1, len(data)):
         if data[i][0] - session[-1][0] > timedelta(seconds=1800):
-            sessions.append((ip, session))
+            sessions.append(session)
             session = [data[i]]
         else:
             session.append(data[i])
-    sessions.append((ip, session))
-    return sessions
+    sessions.append(session)
+    return (ip, sessions)
+
 
 # Spark configuration
 conf = SparkConf().setMaster('local').setAppName('Log Analysis')
